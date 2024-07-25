@@ -48,7 +48,7 @@ public final class WorkProcessor<T> implements EventProcessor {
 
     private final TimeoutHandler timeoutHandler;
     private final ExceptionHandler<? super T> exceptionHandler;
-    private final EventReleaser eventReleaser = () -> sequence.set(Long.MAX_VALUE);
+    private final EventReleaser eventReleaser = () -> sequence.orderedSet(Long.MAX_VALUE);
 
 
     /**
@@ -114,7 +114,7 @@ public final class WorkProcessor<T> implements EventProcessor {
                         //当前消费到的数据位置, 应设置为 workSequence的值.
                         //同一组消费者竞争数据, 而且不共享, 其实是竞争workSequence中的下标, 所以当前消费者消费到的位置, 应该是同一组中workSequence的位置
                         //workSequence 其实代表了当前组多个消费者共同消费的结果, 也是他们共同竞争的点,
-                        sequence.set(nextSequence - 1L);
+                        sequence.orderedSet(nextSequence - 1L);
                     }
                     //一组消费者共享同一个 workSequence, 使用 CAS 竞争获取可读数据序号,
                     //上面说了, 看似是在竞争生产者发布的数据, 其实是在竞争 workSequence 的序列号

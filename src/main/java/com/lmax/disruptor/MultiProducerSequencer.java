@@ -68,7 +68,7 @@ public final class MultiProducerSequencer extends AbstractSequencer {
 
         if (wrapPoint > cachedGatingSequence || cachedGatingSequence > cursorValue) {
             long minSequence = Util.getMinimumSequence(gatingSequences, cursorValue);
-            gatingSequenceCache.set(minSequence);
+            gatingSequenceCache.orderedSet(minSequence);
 
             if (wrapPoint > minSequence) {
                 return false;
@@ -80,7 +80,7 @@ public final class MultiProducerSequencer extends AbstractSequencer {
 
     @Override
     public void claim(long sequence) {
-        cursor.set(sequence);
+        cursor.orderedSet(sequence);
     }
 
     @Override
@@ -126,7 +126,7 @@ public final class MultiProducerSequencer extends AbstractSequencer {
                 }
 
                 //更新下缓存的消费下标,
-                gatingSequenceCache.set(gatingSequence);
+                gatingSequenceCache.orderedSet(gatingSequence);
             } else if (cursor.compareAndSet(current, next)) {
                 //否则使用 CAS 操作更新 cursor
                 break;

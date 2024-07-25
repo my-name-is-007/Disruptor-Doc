@@ -129,7 +129,7 @@ public final class BatchEventProcessor<T> implements EventProcessor {
                 }
 
                 //更新最新消费位点
-                sequence.set(availableSequence);
+                sequence.orderedSet(availableSequence);
             } catch (final TimeoutException e) {
                 notifyTimeout(sequence.get());
             } catch (final AlertException ex) {
@@ -138,7 +138,7 @@ public final class BatchEventProcessor<T> implements EventProcessor {
                 }
             } catch (final Throwable ex) {
                 handleEventException(ex, nextSequence, event);
-                sequence.set(nextSequence);
+                sequence.orderedSet(nextSequence);
                 nextSequence++;
             }
         }

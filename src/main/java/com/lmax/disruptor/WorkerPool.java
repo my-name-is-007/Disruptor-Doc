@@ -82,11 +82,11 @@ public final class WorkerPool<T> {
          * 其实Kafka的消费者组, 在上线时又何尝不是这样呢,
          */
         final long cursor = ringBuffer.getCursor();
-        workSequence.set(cursor);
+        workSequence.orderedSet(cursor);
 
         //设置每个消费者的游标位置(在此之前生产的数据, 不再消费), 并启动
         for (WorkProcessor<?> processor : workProcessors) {
-            processor.getSequence().set(cursor);
+            processor.getSequence().orderedSet(cursor);
             executor.execute(processor);
         }
 

@@ -117,7 +117,7 @@ public final class SingleProducerSequencer extends SingleProducerSequencerFields
      */
     @Override
     public void publish(long sequence) {
-        cursor.set(sequence);
+        cursor.orderedSet(sequence);
         waitStrategy.signalAllWhenBlocking();
     }
 

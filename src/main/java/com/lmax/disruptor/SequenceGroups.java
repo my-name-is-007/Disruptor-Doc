@@ -36,7 +36,7 @@ class SequenceGroups {
 
             int index = currentSequences.length;
             for (Sequence sequence : sequencesToAdd) {
-                sequence.set(cursorSequence);
+                sequence.orderedSet(cursorSequence);
                 updatedSequences[index++] = sequence;
             }
         }
@@ -44,7 +44,7 @@ class SequenceGroups {
 
         cursorSequence = cursor.getCursor();
         for (Sequence sequence : sequencesToAdd) {
-            sequence.set(cursorSequence);
+            sequence.orderedSet(cursorSequence);
         }
     }
 

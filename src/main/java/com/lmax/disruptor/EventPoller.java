@@ -52,7 +52,7 @@ public class EventPoller<T> {
                 while (nextSequence <= availableSequence & processNextEvent);
             }
             finally {
-                sequence.set(processedSequence);
+                sequence.orderedSet(processedSequence);
             }
 
             return PollState.PROCESSING;

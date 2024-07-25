@@ -37,7 +37,7 @@ public final class FixedSequenceGroup extends Sequence {
 
     /** 下面都他妈 抛 不支持的异常. **/
     @Override
-    public void set(long value) { throw new UnsupportedOperationException(); }
+    public void orderedSet(long value) { throw new UnsupportedOperationException(); }
     
     @Override
     public boolean compareAndSet(long expectedValue, long newValue) { throw new UnsupportedOperationException(); }

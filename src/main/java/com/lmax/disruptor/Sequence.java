@@ -20,10 +20,12 @@ import sun.misc.Unsafe;
 
 import java.util.concurrent.atomic.LongAdder;
 
-/** 7个 long类型, 进行填充. **/
+/**
+ * 7个 long类型, 进行填充.
+ * 有的缓存行是64字节, 也可能是 128字节: 所以前面填充7个满足64字节的缓存行, 后面再填充7个, 满足128字节情况下的填充.
+ */
 class LhsPadding { protected long p1, p2, p3, p4, p5, p6, p7;}
 class Value extends LhsPadding { protected volatile long value;}
-
 class RhsPadding extends Value { protected long p9, p10, p11, p12, p13, p14, p15; }
 
 /**
@@ -53,7 +55,7 @@ public class Sequence extends RhsPadding {
     public Sequence(final long initialValue) { UNSAFE.putOrderedLong(this, VALUE_OFFSET, initialValue); }
 
     /** 设置 value属性值, 运行期设置. **/
-    public void set(final long value) { UNSAFE.putOrderedLong(this, VALUE_OFFSET, value); }
+    public void orderedSet(final long value) { UNSAFE.putOrderedLong(this, VALUE_OFFSET, value); }
 
     /** 运行期 value, 设置. **/
     public void setVolatile(final long value) { UNSAFE.putLongVolatile(this, VALUE_OFFSET, value); }

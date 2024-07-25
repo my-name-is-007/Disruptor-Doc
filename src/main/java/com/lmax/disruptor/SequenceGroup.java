@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
  * A {@link Sequence} group that can dynamically have {@link Sequence}s added and removed while being
  * thread safe.
  * <p>
- * The {@link SequenceGroup#get()} and {@link SequenceGroup#set(long)} methods are lock free and can be
+ * The {@link SequenceGroup#get()} and {@link SequenceGroup#orderedSet(long)} methods are lock free and can be
  * concurrently be called with the {@link SequenceGroup#add(Sequence)} and {@link SequenceGroup#remove(Sequence)}.
  */
 public final class SequenceGroup extends Sequence
@@ -57,12 +57,12 @@ public final class SequenceGroup extends Sequence
      * @param value to set the group of sequences to.
      */
     @Override
-    public void set(final long value)
+    public void orderedSet(final long value)
     {
         final Sequence[] sequences = this.sequences;
         for (Sequence sequence : sequences)
         {
-            sequence.set(value);
+            sequence.orderedSet(value);
         }
     }
 
